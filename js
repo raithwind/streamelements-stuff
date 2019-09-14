@@ -1,4 +1,7 @@
-let goal = 100,
+let totalF,
+    rnded = 100,
+    increment = 100,
+	goal = 100,
 	eventsLimit = 5,
     userLocale = "en-US",
     includeFollowers = true;
@@ -16,13 +19,20 @@ window.addEventListener('onEventReceived', function (obj) {
     const event = obj.detail.event;
 
     if (listener === 'follower') {
+      console.log(increment)
+      rnded = Math.ceil((totalF+2)/increment)*increment
+      console.log(rnded)
         if (includeFollowers) {
-            addEvent('','' ,event.count+" / " + goal);
+          totalF +=1
+            addEvent('','' ,totalF +" / " + rnded);
         }
     }
 });
 
 window.addEventListener('onWidgetLoad', function (obj) {
+  	console.log("HERE")
+  	console.log(obj);
+	totalF = obj.detail.session.data["follower-total"].count
     let recents = obj.detail.recents;
     recents.sort(function (a, b) {
         return Date.parse(a.createdAt) - Date.parse(b.createdAt);
@@ -31,6 +41,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
     const fieldData = obj.detail.fieldData;
     eventsLimit = fieldData.eventsLimit;
 	goal = fieldData.goal;
+  	increment = fieldData.increment;
     includeFollowers = (fieldData.includeFollowers === "yes");
     direction = fieldData.direction;
     userLocale = fieldData.locale;
@@ -43,7 +54,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
 
         if (event.type === 'follower') {
             if (includeFollowers) {
-                addEvent('','' ,event.count+" / " + goal);
+                addEvent('','' ,totalF + " /" + rnded);
             }
         } 
     }
