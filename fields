@@ -4,6 +4,11 @@
     "label":"This is a test field",
     "value":100
   },
+  "increment":{
+  "increment":"number",
+    "label":"Increment by:",
+    "value":100
+    },
   "eventsLimit": {
     "type": "number",
     "label": "Limit displayed events to:",
